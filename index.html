@@ -442,7 +442,7 @@
                 
                 <div class="question">
                     <label class="question-label">¿Cuál fue la razón principal de tu salida?<span class="required">*</span>
-                        <span class="question-sublabel">Enumere del 1 al 3 desde la que más impacto tuvo a la hora de tomar la decisión a la que menos. Puede marcar sólo una también.</span>
+                        <span class="question-sublabel">Enumere del 1 al 3 desde la que más impacto tuvo a la hora de tomar la decisión a la que menos.</span>
                     </label>
                     <div class="ranking-item">
                         <input type="number" name="ranking_desarrollo" min="0" max="3" placeholder="0">
@@ -1057,15 +1057,49 @@
             }
         });
         
-        // Validación de rankings (solo permitir 1, 2, 3 o dejar en blanco)
-        document.querySelectorAll('.ranking-item input[type="number"]').forEach(input => {
-            input.addEventListener('change', function() {
-                if (this.value !== '' && (this.value < 0 || this.value > 3)) {
-                    alert('Por favor, ingresa un valor entre 0 y 3, o deja el campo vacío.');
+        // Validación de rankings: solo 1, 2, 3 sin repetir, mínimo 1 marcado
+        const rankingInputs = document.querySelectorAll('.ranking-item input[type="number"]');
+
+        rankingInputs.forEach(input => {
+            // Solo validar al perder el foco (blur), no durante la escritura
+            input.addEventListener('blur', function() {
+                const val = this.value.trim();
+
+                // Permitir vacío
+                if (val === '') return;
+
+                const num = parseInt(val);
+
+                // Solo permitir 1, 2 o 3
+                if (isNaN(num) || ![1, 2, 3].includes(num)) {
+                    alert('Solo puedes ingresar los valores 1, 2 o 3.');
+                    this.value = '';
+                    return;
+                }
+
+                // Verificar que no se repita el mismo número en otro campo
+                let duplicado = false;
+                rankingInputs.forEach(inp => {
+                    if (inp !== this && inp.value !== '' && parseInt(inp.value) === num) {
+                        duplicado = true;
+                    }
+                });
+                if (duplicado) {
+                    alert('El número ' + num + ' ya está asignado a otra opción. Cada número solo puede usarse una vez.');
                     this.value = '';
                 }
             });
         });
+
+        // Validar al enviar que haya al menos 1 ranking asignado
+        document.getElementById('encuestaSalida').addEventListener('submit', function(e) {
+            const filled = Array.from(rankingInputs).filter(inp => inp.value.trim() !== '');
+            if (filled.length === 0) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                alert('Debes asignar al menos un número (1, 2 o 3) en la pregunta de razón principal de salida.');
+            }
+        }, true);
     </script>
 </body>
 </html>
