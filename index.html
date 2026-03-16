@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Salida - Apprecio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #fa345e 0%, #ff5a7a 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header img {
+            max-width: 200px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .intro-text {
+            background: #fff8f9;
+            border-left: 4px solid #fa345e;
+            padding: 25px;
+            margin: 30px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        
+        .form-content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            color: #fa345e;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-number {
+            background: #fa345e;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+        }
+        
+        .question-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 16px;
+        }
+        
+        .question-sublabel {
+            font-size: 14px;
+            color: #666;
+            font-weight: 400;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #fa345e;
+            box-shadow: 0 0 0 3px rgba(250, 52, 94, 0.1);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+        
+        .checkbox-item:hover,
+        .radio-item:hover {
+            background: #f9f9f9;
+        }
+        
+        input[type="checkbox"],
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #fa345e;
+        }
+        
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .ranking-item input[type="number"] {
+            width: 80px;
+            text-align: center;
+        }
+        
+        .ranking-item label {
+            flex: 1;
+        }
+        
+        .scale-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(to right, #ffcdd6 0%, #fa345e 100%);
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fa345e;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fa345e;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            border: none;
+        }
+        
+        .scale-value {
+            background: #fa345e;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .likert-scale {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .likert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .likert-question {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .likert-options {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .likert-options input[type="radio"] {
+            margin: 0;
+        }
+        
+        .likert-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+            padding: 0 15px;
+        }
+        
+        .submit-container {
+            text-align: center;
+            padding: 30px;
+            background: #f9f9f9;
+            margin-top: 30px;
+            border-radius: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #fa345e 0%, #ff5a7a 100%);
+            color: white;
+            border: none;
+            padding: 16px 50px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(250, 52, 94, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(250, 52, 94, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .required {
+            color: #fa345e;
+            margin-left: 3px;
+        }
+        
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .likert-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .likert-options {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://estudios.apprecio.com/hubfs/logos/Apprecio-logo-rojo.png" alt="Apprecio Logo">
+            <h1>Encuesta de Salida</h1>
+        </div>
+        
+        <div class="intro-text">
+            <p><strong>Queremos agradecerte por el tiempo y el camino compartido en Apprecio.</strong></p>
+            <p style="margin-top: 10px;">Esta encuesta busca entender tu experiencia y recoger señales que nos ayuden a mejorar.</p>
+            <p style="margin-top: 10px;">Tu mirada es importante para seguir construyendo una cultura más clara, consistente y sostenible.</p>
+            <p style="margin-top: 10px;">Tus respuestas serán revisadas con criterio de mejora organizacional y tratadas con respeto.</p>
+        </div>
+        
+        <form id="encuestaSalida" class="form-content">
+            <!-- SECCIÓN I: DATOS PERSONALES -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">I</span>
+                    Datos Personales
+                </h2>
+                
+                <div class="question">
+                    <label class="question-label">Nombre<span class="required">*</span></label>
+                    <input type="text" name="nombre" required>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">Cargo que desempeñabas<span class="required">*</span></label>
+                    <input type="text" name="cargo" required>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">Antigüedad en Apprecio<span class="required">*</span></label>
+                    <select name="antiguedad" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Menos de 6 meses">Menos de 6 meses</option>
+                        <option value="Menos de 1 año">Menos de 1 año</option>
+                        <option value="Menos de 2 años">Menos de 2 años</option>
+                        <option value="Menos de 3 años">Menos de 3 años</option>
+                        <option value="Más de 3 años">Más de 3 años</option>
+                    </select>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">Equipo al que pertenecías<span class="required">*</span></label>
+                    <select name="equipo" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="People & Culture">People & Culture</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Brand">Brand</option>
+                        <option value="Product">Product</option>
+                        <option value="IT">IT</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN II: MOTIVOS DE SALIDA -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">II</span>
+                    Motivos de Salida
+                </h2>
+                
+                <div class="question">
+                    <label class="question-label">¿Cuál fue la razón principal de tu salida?<span class="required">*</span>
+                        <span class="question-sublabel">Enumere del 1 al 3 desde la que más impacto tuvo a la hora de tomar la decisión a la que menos. Puede marcar sólo una también.</span>
+                    </label>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_desarrollo" min="0" max="3" placeholder="0">
+                        <label>Recibí una mejor oportunidad de desarrollo profesional</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_economica" min="0" max="3" placeholder="0">
+                        <label>Recibí una mejor propuesta económica</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_equilibrio" min="0" max="3" placeholder="0">
+                        <label>Busco mayor equilibrio personal/laboral</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_crecimiento" min="0" max="3" placeholder="0">
+                        <label>No veía oportunidades claras de crecimiento</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_rol" min="0" max="3" placeholder="0">
+                        <label>Mi rol no estaba alineado con mis expectativas</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_jefe" min="0" max="3" placeholder="0">
+                        <label>Tenía diferencias con mi jefe directo</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_cultura" min="0" max="3" placeholder="0">
+                        <label>Tenía diferencias con la forma de trabajar (cultura)</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_personales" min="0" max="3" placeholder="0">
+                        <label>Motivos personales o familiares</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_cambio" min="0" max="3" placeholder="0">
+                        <label>Cambio de industria o proyecto de vida</label>
+                    </div>
+                    <div class="ranking-item">
+                        <input type="number" name="ranking_otro" min="0" max="3" placeholder="0">
+                        <label>Otro</label>
+                    </div>
+                    <input type="text" name="ranking_otro_texto" placeholder="Si seleccionaste 'Otro', especifica cuál" style="margin-top: 10px;">
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">Tu decisión de salir:<span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="decision_salir" value="Fue planificada con tiempo" required>
+                            Fue planificada con tiempo
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="decision_salir" value="Se fue construyendo en los últimos meses" required>
+                            Se fue construyendo en los últimos meses
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="decision_salir" value="Se gatilló por una situación puntual" required>
+                            Se gatilló por una situación puntual
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="decision_salir" value="Prefiero no responder" required>
+                            Prefiero no responder
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Hace cuánto tiempo comenzaste a pensar seriamente en salir de Apprecio?<span class="required">*</span></label>
+                    <select name="tiempo_pensando" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="Menos de 1 mes">Menos de 1 mes</option>
+                        <option value="Entre 1 y 3 meses">Entre 1 y 3 meses</option>
+                        <option value="Entre 3 y 6 meses">Entre 3 y 6 meses</option>
+                        <option value="Más de 6 meses">Más de 6 meses</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Qué tan evitable sentías que era tu salida si algunas cosas hubieran sido distintas?<span class="required">*</span>
+                        <span class="question-sublabel">1 = nada evitable, 5 = totalmente evitable</span>
+                    </label>
+                    <div class="scale-container">
+                        <input type="range" name="evitabilidad" min="1" max="5" value="3" oninput="this.nextElementSibling.textContent = this.value" required>
+                        <span class="scale-value">3</span>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Nada evitable</span>
+                        <span>Totalmente evitable</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN III: FACTORES QUE INCIDIERON -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">III</span>
+                    Factores que Incidieron en tu Renuncia
+                </h2>
+                
+                <div class="question">
+                    <label class="question-label">¿Qué factores incidieron en tu decisión de renunciar?
+                        <span class="question-sublabel">Selecciona todos los que correspondan</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_compensacion" value="Compensación">
+                            Compensación
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_beneficios" value="Beneficios">
+                            Beneficios
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_carga" value="Carga de trabajo">
+                            Carga de trabajo
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_foco" value="Falta de foco o prioridades claras">
+                            Falta de foco o prioridades claras
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_rol_claro" value="Rol poco claro">
+                            Rol poco claro
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_expectativas" value="Expectativas poco claras">
+                            Expectativas poco claras
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_crecimiento_oport" value="Pocas oportunidades de crecimiento">
+                            Pocas oportunidades de crecimiento
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_aprendizaje" value="Pocas oportunidades de aprendizaje">
+                            Pocas oportunidades de aprendizaje
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_liderazgo" value="Estilo de liderazgo">
+                            Estilo de liderazgo
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_feedback" value="Feedback insuficiente">
+                            Feedback insuficiente
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_reconocimiento" value="Reconocimiento insuficiente">
+                            Reconocimiento insuficiente
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_coordinacion" value="Coordinación entre áreas">
+                            Coordinación entre áreas
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_clima" value="Clima del equipo">
+                            Clima del equipo
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_cultura_org" value="Cultura organizacional">
+                            Cultura organizacional
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_herramientas" value="Herramientas o procesos poco eficientes">
+                            Herramientas o procesos poco eficientes
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_flexibilidad" value="Flexibilidad">
+                            Flexibilidad
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_balance" value="Balance vida personal / trabajo">
+                            Balance vida personal / trabajo
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_oferta_externa" value="Oferta externa más atractiva">
+                            Oferta externa más atractiva
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_motivos_pers" value="Motivos personales">
+                            Motivos personales
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="factor_otro" value="Otro">
+                            Otro
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">Evalúa cuánto incidió cada uno de estos elementos en tu salida<span class="required">*</span>
+                        <span class="question-sublabel">1 = no incidió, 5 = incidió fuertemente</span>
+                    </label>
+                    <div class="likert-legend">
+                        <span>1 - No incidió</span>
+                        <span>5 - Incidió fuertemente</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-item">
+                            <span class="likert-question">Claridad de rol y expectativas</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_claridad_rol" value="1" required>
+                                <input type="radio" name="eval_claridad_rol" value="2" required>
+                                <input type="radio" name="eval_claridad_rol" value="3" required>
+                                <input type="radio" name="eval_claridad_rol" value="4" required>
+                                <input type="radio" name="eval_claridad_rol" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Prioridades claras en el día a día</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_prioridades" value="1" required>
+                                <input type="radio" name="eval_prioridades" value="2" required>
+                                <input type="radio" name="eval_prioridades" value="3" required>
+                                <input type="radio" name="eval_prioridades" value="4" required>
+                                <input type="radio" name="eval_prioridades" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Carga de trabajo sostenible</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_carga" value="1" required>
+                                <input type="radio" name="eval_carga" value="2" required>
+                                <input type="radio" name="eval_carga" value="3" required>
+                                <input type="radio" name="eval_carga" value="4" required>
+                                <input type="radio" name="eval_carga" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Calidad del liderazgo directo</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_liderazgo" value="1" required>
+                                <input type="radio" name="eval_liderazgo" value="2" required>
+                                <input type="radio" name="eval_liderazgo" value="3" required>
+                                <input type="radio" name="eval_liderazgo" value="4" required>
+                                <input type="radio" name="eval_liderazgo" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Oportunidades de desarrollo</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_desarrollo" value="1" required>
+                                <input type="radio" name="eval_desarrollo" value="2" required>
+                                <input type="radio" name="eval_desarrollo" value="3" required>
+                                <input type="radio" name="eval_desarrollo" value="4" required>
+                                <input type="radio" name="eval_desarrollo" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Calidad del feedback recibido</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_feedback" value="1" required>
+                                <input type="radio" name="eval_feedback" value="2" required>
+                                <input type="radio" name="eval_feedback" value="3" required>
+                                <input type="radio" name="eval_feedback" value="4" required>
+                                <input type="radio" name="eval_feedback" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Reconocimiento por tu aporte</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_reconocimiento" value="1" required>
+                                <input type="radio" name="eval_reconocimiento" value="2" required>
+                                <input type="radio" name="eval_reconocimiento" value="3" required>
+                                <input type="radio" name="eval_reconocimiento" value="4" required>
+                                <input type="radio" name="eval_reconocimiento" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Coordinación entre áreas</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_coordinacion" value="1" required>
+                                <input type="radio" name="eval_coordinacion" value="2" required>
+                                <input type="radio" name="eval_coordinacion" value="3" required>
+                                <input type="radio" name="eval_coordinacion" value="4" required>
+                                <input type="radio" name="eval_coordinacion" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Herramientas y procesos para hacer bien tu trabajo</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_herramientas" value="1" required>
+                                <input type="radio" name="eval_herramientas" value="2" required>
+                                <input type="radio" name="eval_herramientas" value="3" required>
+                                <input type="radio" name="eval_herramientas" value="4" required>
+                                <input type="radio" name="eval_herramientas" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Compensación total</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_compensacion" value="1" required>
+                                <input type="radio" name="eval_compensacion" value="2" required>
+                                <input type="radio" name="eval_compensacion" value="3" required>
+                                <input type="radio" name="eval_compensacion" value="4" required>
+                                <input type="radio" name="eval_compensacion" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Balance personal/laboral</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_balance" value="1" required>
+                                <input type="radio" name="eval_balance" value="2" required>
+                                <input type="radio" name="eval_balance" value="3" required>
+                                <input type="radio" name="eval_balance" value="4" required>
+                                <input type="radio" name="eval_balance" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Sentido de pertenencia con la cultura Apprecio</span>
+                            <div class="likert-options">
+                                <input type="radio" name="eval_pertenencia" value="1" required>
+                                <input type="radio" name="eval_pertenencia" value="2" required>
+                                <input type="radio" name="eval_pertenencia" value="3" required>
+                                <input type="radio" name="eval_pertenencia" value="4" required>
+                                <input type="radio" name="eval_pertenencia" value="5" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN IV: EXPERIENCIA INTERNA Y LIDERAZGO -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">IV</span>
+                    Experiencia Interna y Liderazgo
+                </h2>
+                
+                <div class="question">
+                    <label class="question-label">¿Qué tan de acuerdo estás con las siguientes afirmaciones?<span class="required">*</span>
+                        <span class="question-sublabel">1 = muy en desacuerdo, 5 = muy de acuerdo</span>
+                    </label>
+                    <div class="likert-legend">
+                        <span>1 - Muy en desacuerdo</span>
+                        <span>5 - Muy de acuerdo</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-item">
+                            <span class="likert-question">Tenía claridad sobre lo que se esperaba de mí</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_claridad" value="1" required>
+                                <input type="radio" name="afir_claridad" value="2" required>
+                                <input type="radio" name="afir_claridad" value="3" required>
+                                <input type="radio" name="afir_claridad" value="4" required>
+                                <input type="radio" name="afir_claridad" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Mi trabajo estaba conectado con objetivos relevantes</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_objetivos" value="1" required>
+                                <input type="radio" name="afir_objetivos" value="2" required>
+                                <input type="radio" name="afir_objetivos" value="3" required>
+                                <input type="radio" name="afir_objetivos" value="4" required>
+                                <input type="radio" name="afir_objetivos" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Contaba con el contexto necesario para priorizar bien</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_contexto" value="1" required>
+                                <input type="radio" name="afir_contexto" value="2" required>
+                                <input type="radio" name="afir_contexto" value="3" required>
+                                <input type="radio" name="afir_contexto" value="4" required>
+                                <input type="radio" name="afir_contexto" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Mi jefe me ayudaba a enfocar lo importante</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_jefe_enfoque" value="1" required>
+                                <input type="radio" name="afir_jefe_enfoque" value="2" required>
+                                <input type="radio" name="afir_jefe_enfoque" value="3" required>
+                                <input type="radio" name="afir_jefe_enfoque" value="4" required>
+                                <input type="radio" name="afir_jefe_enfoque" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Recibía feedback útil y a tiempo</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_feedback" value="1" required>
+                                <input type="radio" name="afir_feedback" value="2" required>
+                                <input type="radio" name="afir_feedback" value="3" required>
+                                <input type="radio" name="afir_feedback" value="4" required>
+                                <input type="radio" name="afir_feedback" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Me sentía valorado/a por mi trabajo</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_valorado" value="1" required>
+                                <input type="radio" name="afir_valorado" value="2" required>
+                                <input type="radio" name="afir_valorado" value="3" required>
+                                <input type="radio" name="afir_valorado" value="4" required>
+                                <input type="radio" name="afir_valorado" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Había espacio para conversar problemas de forma abierta</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_conversacion" value="1" required>
+                                <input type="radio" name="afir_conversacion" value="2" required>
+                                <input type="radio" name="afir_conversacion" value="3" required>
+                                <input type="radio" name="afir_conversacion" value="4" required>
+                                <input type="radio" name="afir_conversacion" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Veía oportunidades reales de crecimiento en Apprecio</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_crecimiento" value="1" required>
+                                <input type="radio" name="afir_crecimiento" value="2" required>
+                                <input type="radio" name="afir_crecimiento" value="3" required>
+                                <input type="radio" name="afir_crecimiento" value="4" required>
+                                <input type="radio" name="afir_crecimiento" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">Los procesos internos facilitaban mi trabajo</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_procesos" value="1" required>
+                                <input type="radio" name="afir_procesos" value="2" required>
+                                <input type="radio" name="afir_procesos" value="3" required>
+                                <input type="radio" name="afir_procesos" value="4" required>
+                                <input type="radio" name="afir_procesos" value="5" required>
+                            </div>
+                        </div>
+                        <div class="likert-item">
+                            <span class="likert-question">La forma en que trabajábamos era consistente con lo que Apprecio promueve como cultura</span>
+                            <div class="likert-options">
+                                <input type="radio" name="afir_consistencia" value="1" required>
+                                <input type="radio" name="afir_consistencia" value="2" required>
+                                <input type="radio" name="afir_consistencia" value="3" required>
+                                <input type="radio" name="afir_consistencia" value="4" required>
+                                <input type="radio" name="afir_consistencia" value="5" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Qué fue lo mejor de tu experiencia en Apprecio?<span class="required">*</span></label>
+                    <textarea name="mejor_experiencia" required></textarea>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Qué fue lo más difícil o desgastante de tu experiencia?<span class="required">*</span></label>
+                    <textarea name="mas_dificil" required></textarea>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Hubo algo que intentaste levantar, proponer o resolver y no avanzó como esperabas?</label>
+                    <textarea name="propuesta_no_avanzo"></textarea>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Qué podría haber hecho Apprecio para aumentar la probabilidad de que te quedaras?<span class="required">*</span></label>
+                    <textarea name="que_hacer_para_quedarse" required></textarea>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN V: MEJORA Y CIERRE -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">V</span>
+                    Mejora y Cierre
+                </h2>
+                
+                <div class="question">
+                    <label class="question-label">Si pudieras cambiar una sola cosa de Apprecio para mejorar la experiencia de quienes se quedan, ¿cuál sería?<span class="required">*</span></label>
+                    <textarea name="cambio_sugerido" required></textarea>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Recomendarías Apprecio como lugar para trabajar?<span class="required">*</span>
+                        <span class="question-sublabel">Escala 0 a 10, donde 0 es para nada y 10 es completamente</span>
+                    </label>
+                    <div class="scale-container">
+                        <input type="range" name="recomendacion" min="0" max="10" value="5" oninput="this.nextElementSibling.textContent = this.value" required>
+                        <span class="scale-value">5</span>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Para nada (0)</span>
+                        <span>Completamente (10)</span>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Volverías a trabajar en Apprecio en el futuro?<span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="volveria" value="Sí" required>
+                            Sí
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="volveria" value="Tal vez" required>
+                            Tal vez
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="volveria" value="No" required>
+                            No
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Te gustaría tener una conversación de salida para profundizar algunos puntos?<span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="conversacion_salida" value="Sí" required>
+                            Sí
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="conversacion_salida" value="No" required>
+                            No
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <label class="question-label">¿Hay algo más que quieras dejarnos como feedback?</label>
+                    <textarea name="feedback_adicional"></textarea>
+                </div>
+            </div>
+            
+            <div id="successMessage" class="success-message">
+                ✓ ¡Gracias por completar la encuesta! Tus respuestas han sido enviadas exitosamente.
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                ✗ Hubo un error al enviar la encuesta. Por favor, intenta nuevamente.
+            </div>
+            
+            <div class="submit-container">
+                <button type="submit" class="submit-btn" id="submitBtn">Enviar Encuesta</button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // CONFIGURACIÓN: Actualiza esta URL con la URL de tu webhook de n8n
+        const WEBHOOK_URL = 'https://tu-instancia-n8n.com/webhook/encuesta-salida';
+        
+        document.getElementById('encuestaSalida').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Ocultar mensajes previos
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // Deshabilitar botón
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            
+            // Recopilar todos los datos del formulario
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Procesar campos normales
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            // Procesar checkboxes (factores que incidieron)
+            const factores = [];
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+                factores.push(cb.value);
+            });
+            data.factores_seleccionados = factores.join(', ');
+            
+            // Agregar timestamp
+            data.timestamp = new Date().toISOString();
+            
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    this.reset();
+                    
+                    // Scroll al mensaje de éxito
+                    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Resetear valores de los sliders
+                    document.querySelectorAll('input[type="range"]').forEach(slider => {
+                        slider.value = slider.getAttribute('value');
+                        const valueDisplay = slider.nextElementSibling;
+                        if (valueDisplay && valueDisplay.classList.contains('scale-value')) {
+                            valueDisplay.textContent = slider.value;
+                        }
+                    });
+                } else {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Encuesta';
+            }
+        });
+        
+        // Validación de rankings (solo permitir 1, 2, 3 o dejar en blanco)
+        document.querySelectorAll('.ranking-item input[type="number"]').forEach(input => {
+            input.addEventListener('change', function() {
+                if (this.value !== '' && (this.value < 0 || this.value > 3)) {
+                    alert('Por favor, ingresa un valor entre 0 y 3, o deja el campo vacío.');
+                    this.value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
